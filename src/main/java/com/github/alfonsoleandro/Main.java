@@ -14,6 +14,8 @@ import java.sql.SQLException;
  */
 public class Main {
 
+    private static final String BD_NAME = "pruebas";
+
     public static void main(String[] args) {
         try {
             new Main();
@@ -27,28 +29,30 @@ public class Main {
     public Main() throws ClassNotFoundException, SQLException, FileNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
         this.connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/pruebas",
+                "jdbc:mysql://localhost:3306/" + BD_NAME,
                 "root",
                 "bernardo");
 
-        createTables();
-        runAlters();
+        // Creates all the necessary tables, read from the "tables.sql" file.
+        executeFile(new File("src/main/resources/db/tables.sql"));
+
+        // Alters all the necessary tables, read from the "alters.sql" file.
+        executeFile(new File("src/main/resources/db/alters.sql"));
+
 
         loadData();
     }
 
     /**
-     * Creates all the necessary tables, read from the "tables.sql" file.
+     * Executes a list of statements in a given file.
      */
-    private void createTables() throws SQLException {
-        // Read create  tables.sql
-    }
-
-    /**
-     * Runs alters on every table, in order to add the needed foreign keys.
-     */
-    private void runAlters() throws SQLException {
-        // Read alters from alters.sql
+    private void executeFile(File inputFile) throws SQLException, FileNotFoundException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
+        StringBuilder sb = new StringBuilder();
+        bufferedReader.lines().forEach(sb::append);
+        for (String statement : sb.toString().split(";")) {
+            this.connection.prepareStatement(statement+";").execute();
+        }
     }
 
     /**
