@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS constructors
 (
-    constuctor_id  INT PRIMARY KEY AUTO_INCREMENT,
+    constuctor_id  INT PRIMARY KEY,
     constuctor_ref VARCHAR(100),
     name           VARCHAR(100),
     nationality    VARCHAR(100),
@@ -9,13 +9,13 @@ CREATE TABLE IF NOT EXISTS constructors
 
 CREATE TABLE IF NOT EXISTS status
 (
-    status_id INT PRIMARY KEY AUTO_INCREMENT,
+    status_id INT PRIMARY KEY,
     status    VARCHAR(50)
 );
 
 CREATE TABLE IF NOT EXISTS circuits
 (
-    circuit_id  INT PRIMARY KEY AUTO_INCREMENT,
+    circuit_id  INT PRIMARY KEY,
     circuit_ref VARCHAR(100),
     name        VARCHAR(100),
     location    VARCHAR(100),
@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS circuits
 
 CREATE TABLE IF NOT EXISTS races
 (
-    race_id     INT PRIMARY KEY AUTO_INCREMENT,
+    race_id     INT PRIMARY KEY,
     year        YEAR,
     round       INT,
     circuit_id  INT NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS races
 
 CREATE TABLE IF NOT EXISTS drivers
 (
-    driver_id   INT PRIMARY KEY AUTO_INCREMENT,
+    driver_id   INT PRIMARY KEY,
     driver_ref  VARCHAR(100),
     number      INT,
     code        VARCHAR(3),
@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS pit_stops
 
 CREATE TABLE IF NOT EXISTS driver_standings
 (
-    driver_standing_id INT PRIMARY KEY AUTO_INCREMENT,
+    driver_standing_id INT PRIMARY KEY,
     race_id            INT NOT NULL,
     driver_id          INT NOT NULL,
     points             INT,
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS lap_times
 
 CREATE TABLE IF NOT EXISTS qualifyings
 (
-    qualifying_id  INT PRIMARY KEY AUTO_INCREMENT,
+    qualifying_id  INT PRIMARY KEY,
     race_id        INT NOT NULL,
     driver_id      INT NOT NULL,
     constructor_id INT NOT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS qualifyings
 
 CREATE TABLE IF NOT EXISTS results
 (
-    result_id         INT PRIMARY KEY AUTO_INCREMENT,
+    result_id         INT PRIMARY KEY,
     race_id           INT NOT NULL,
     driver_id         INT NOT NULL,
     constructor_id    INT NOT NULL,
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS results
 
 CREATE TABLE IF NOT EXISTS sprint_results
 (
-    sprint_result_id  INT PRIMARY KEY AUTO_INCREMENT,
+    sprint_result_id  INT PRIMARY KEY,
     race_id           INT NOT NULL,
     driver_id         INT NOT NULL,
     constructor_id    INT NOT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS sprint_results
 
 CREATE TABLE IF NOT EXISTS constructor_standings
 (
-    constructor_standing_id INT PRIMARY KEY AUTO_INCREMENT,
+    constructor_standing_id INT PRIMARY KEY ,
     race_id                 INT NOT NULL,
     constructor_id          INT NOT NULL,
     points                  INT,
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS constructor_standings
 
 CREATE TABLE IF NOT EXISTS constructor_results
 (
-    constructor_result_id INT PRIMARY KEY AUTO_INCREMENT,
+    constructor_result_id INT PRIMARY KEY ,
     race_id               INT NOT NULL,
     constructor_id        INT NOT NULL,
     points                INT,
