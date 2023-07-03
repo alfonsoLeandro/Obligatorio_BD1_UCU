@@ -145,27 +145,6 @@ public class Main {
             }
         });
 
-
-//        for (File f : archivos.listFiles()) {
-
-//            if (f.isDirectory()) continue;
-//            System.out.println(f.getName());
-//            BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
-//            //Orden de tablas:
-//            // 1- circuits
-//            // 2- constructor
-//            // 3- driver
-//            // 4- race
-//            // 5- constructor_results
-//            // 6- qualifying
-//            // 7- pit_stops
-//            // 8- results
-//            // 9- status
-//            // 10- seasons
-//            // 11- lap_times
-//            // 12- driver_standings
-//            // 13- constructor_standings
-//            // 14- sprint results
-//        }
     }
+
 }
