@@ -34,10 +34,10 @@ public class Main {
                 "bernardo");
 
         // Creates all the necessary tables, read from the "tables.sql" file.
-        executeFile(new File("src/main/resources/db/tables.sql"));
+        executeFile(new File("src/main/resources/sql/create_tables.sql"));
 
         // Alters all the necessary tables, read from the "alters.sql" file.
-        executeFile(new File("src/main/resources/db/alters.sql"));
+        executeFile(new File("src/main/resources/sql/alter_tables.sql"));
 
 
         loadData();
