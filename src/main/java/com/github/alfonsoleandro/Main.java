@@ -75,7 +75,7 @@ public class Main {
             String tableName = resultSet.getString("TABLE_NAME");
             if (tableNames.contains(tableName)) {
                 System.out.println(tableName);
-                System.out.println("existia la tabla \"" + tableName + "\", los alters (foreign keys) no se ejecutarán.");
+                System.out.println("Existia la tabla \"" + tableName + "\", los alters (foreign keys) no se ejecutarán.");
                 tablesExist = true;
                 break;
             }
@@ -105,19 +105,20 @@ public class Main {
     private void loadData() throws FileNotFoundException {
         for (String fileName : new String[]{
                 "circuits",
+                "races",
+                "constructors",
                 "constructor_results",
                 "constructor_standings",
-                "constructors",
-                "driver_standings",
                 "drivers",
+                "status",
+                "driver_standings",
                 "lap_times",
                 "pit_stops",
-                "qualifying",
-                "races",
+                "qualifyings",
                 "results",
                 "seasons",
-                "sprint_results",
-                "status"}) {
+                "sprint_results"
+        }) {
             System.out.println("Inserting data from \"" + fileName + ".csv\"...");
             loadFile(fileName);
         }
@@ -138,9 +139,12 @@ public class Main {
             } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
+            String finalStringQuery = insertQuery.replace("\\N", "null");
             try {
-                this.connection.prepareStatement(insertQuery).execute();
+                this.connection.prepareStatement(finalStringQuery).execute();
             } catch (SQLException e) {
+                System.out.println("Ocurrio un error en el siguiente insert:");
+                System.out.println(finalStringQuery);
                 throw new RuntimeException(e);
             }
         });
