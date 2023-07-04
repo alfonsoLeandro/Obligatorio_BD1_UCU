@@ -1,9 +1,6 @@
 package com.github.alfonsoleandro;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
@@ -29,7 +26,7 @@ public class Main {
 
     private final Connection connection;
 
-    public Main() throws ClassNotFoundException, SQLException, FileNotFoundException {
+    public Main() throws ClassNotFoundException, SQLException, IOException {
         System.out.println("Ejecución iniciada: " + new Date());
         Class.forName("com.mysql.cj.jdbc.Driver");
         this.connection = DriverManager.getConnection(
@@ -105,7 +102,7 @@ public class Main {
     /**
      * Loads the data from the csv files to the database.
      */
-    private void loadData() throws FileNotFoundException {
+    private void loadData() throws IOException {
         for (String fileName : new String[]{
                 "circuits",
                 "races",
@@ -131,7 +128,7 @@ public class Main {
     /**
      * Loads a file and inserts its data to the database.
      */
-    private void loadFile(String fileName) throws FileNotFoundException {
+    private void loadFile(String fileName) throws IOException {
         File archivo = new File("src/main/resources/archivos/"+fileName+".csv");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(archivo));
         bufferedReader.lines().skip(1).forEach(line -> {
@@ -151,6 +148,7 @@ public class Main {
                 throw new RuntimeException(e);
             }
         });
+        bufferedReader.close();
 
     }
 
