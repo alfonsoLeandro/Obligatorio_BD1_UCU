@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS constructors
 (
     constructor_id  INT PRIMARY KEY,
-    constuctor_ref VARCHAR(100),
+    constructor_ref VARCHAR(100),
     name           VARCHAR(100),
     nationality    VARCHAR(100),
     url            VARCHAR(100)
