@@ -31,7 +31,7 @@ ALTER TABLE qualifyings
         FOREIGN KEY (driver_id) REFERENCES drivers (driver_id);
 ALTER TABLE qualifyings
     ADD CONSTRAINT fk_qualifyings_constructor
-        FOREIGN KEY (constructor_id) REFERENCES constructors (constuctor_id);
+        FOREIGN KEY (constructor_id) REFERENCES constructors (constructor_id);
 
 ALTER TABLE results
     ADD CONSTRAINT fk_results_race
@@ -41,7 +41,7 @@ ALTER TABLE results
         FOREIGN KEY (driver_id) REFERENCES drivers (driver_id);
 ALTER TABLE results
     ADD CONSTRAINT fk_results_constructor
-        FOREIGN KEY (constructor_id) REFERENCES constructors (constuctor_id);
+        FOREIGN KEY (constructor_id) REFERENCES constructors (constructor_id);
 ALTER TABLE results
     ADD CONSTRAINT fk_results_status
         FOREIGN KEY (status_id) REFERENCES status (status_id);
@@ -54,7 +54,7 @@ ALTER TABLE sprint_results
         FOREIGN KEY (driver_id) REFERENCES drivers (driver_id);
 ALTER TABLE sprint_results
     ADD CONSTRAINT fk_sprint_results_constructor
-        FOREIGN KEY (constructor_id) REFERENCES constructors (constuctor_id);
+        FOREIGN KEY (constructor_id) REFERENCES constructors (constructor_id);
 ALTER TABLE sprint_results
     ADD CONSTRAINT fk_sprint_results_status
         FOREIGN KEY (status_id) REFERENCES status (status_id);
@@ -64,11 +64,11 @@ ALTER TABLE constructor_standings
         FOREIGN KEY (race_id) REFERENCES races (race_id);
 ALTER TABLE constructor_standings
     ADD CONSTRAINT fk_constructor_standings_constructor
-        FOREIGN KEY (constructor_id) REFERENCES constructors (constuctor_id);
+        FOREIGN KEY (constructor_id) REFERENCES constructors (constructor_id);
 
 ALTER TABLE constructor_results
     ADD CONSTRAINT fk_constructor_results_race
         FOREIGN KEY (race_id) REFERENCES races (race_id);
 ALTER TABLE constructor_results
     ADD CONSTRAINT fk_constructor_results_constructor
-        FOREIGN KEY (constructor_id) REFERENCES constructors (constuctor_id);
+        FOREIGN KEY (constructor_id) REFERENCES constructors (constructor_id);
