@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class Main {
 
-    private static final String BD_NAME = "pruebas";
+    private static final String BD_NAME = "obligatorio";
 
     public static void main(String[] args) {
         try {
@@ -118,7 +118,7 @@ public class Main {
                 "seasons",
                 "sprint_results",
                 "status"}) {
-            System.out.println("Inserting data into \"" + fileName + ".csv\"...");
+            System.out.println("Inserting data from \"" + fileName + ".csv\"...");
             loadFile(fileName);
         }
 
