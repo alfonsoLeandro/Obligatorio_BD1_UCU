@@ -122,7 +122,7 @@ public class Main {
                 "seasons",
                 "sprint_results"
         }) {
-            System.out.println("Inserting data from \"" + fileName + ".csv\"...");
+            System.out.println("Insertando datos desde \"" + fileName + ".csv\"...");
             loadFile(fileName);
         }
 
