@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS constructors
 (
-    constuctor_id  INT PRIMARY KEY,
+    constructor_id  INT PRIMARY KEY,
     constuctor_ref VARCHAR(100),
     name           VARCHAR(100),
     nationality    VARCHAR(100),
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS races
     name        VARCHAR(100),
     date        DATE,
     time        Time,
-    alt         INT,
+    alt         VARCHAR(100),
     fp1_date    DATE,
     fp1_time    TIME,
     fp2_date    DATE,
