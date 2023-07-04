@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +30,7 @@ public class Main {
     private final Connection connection;
 
     public Main() throws ClassNotFoundException, SQLException, FileNotFoundException {
+        System.out.println("Ejecución iniciada: " + new Date());
         Class.forName("com.mysql.cj.jdbc.Driver");
         this.connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/" + BD_NAME,
@@ -46,6 +48,7 @@ public class Main {
             loadData();
         }
 
+        System.out.println("Ejecucion finalizada: " + new Date());
 
     }
 
