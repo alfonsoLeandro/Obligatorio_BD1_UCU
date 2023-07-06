@@ -47,6 +47,9 @@ ALTER TABLE results
         FOREIGN KEY (status_id) REFERENCES status (status_id);
 
 ALTER TABLE sprint_results
+    ADD CONSTRAINT fk_sprint_results_results
+        FOREIGN KEY (result_id) REFERENCES results (result_id);
+ALTER TABLE sprint_results
     ADD CONSTRAINT fk_sprint_results_race
         FOREIGN KEY (race_id) REFERENCES races (race_id);
 ALTER TABLE sprint_results

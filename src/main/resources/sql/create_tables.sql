@@ -130,11 +130,10 @@ CREATE TABLE IF NOT EXISTS results
 
 CREATE TABLE IF NOT EXISTS sprint_results
 (
-    sprint_result_id  INT PRIMARY KEY,
+    result_id         INT,
     race_id           INT NOT NULL,
     driver_id         INT NOT NULL,
     constructor_id    INT NOT NULL,
-    status_id         INT NOT NULL,
     number            INT,
     grid              INT,
     position          INT,
@@ -144,10 +143,9 @@ CREATE TABLE IF NOT EXISTS sprint_results
     laps              INT,
     time              TIME(3),
     milliseconds      INT,
-    rank_             INT,
     fastest_lap       INT,
     fastest_lap_time  TIME(3),
-    fastest_lap_speed NUMERIC(6, 3)
+    status_id         INT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS constructor_standings

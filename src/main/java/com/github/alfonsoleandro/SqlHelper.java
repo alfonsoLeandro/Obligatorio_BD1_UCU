@@ -73,7 +73,7 @@ public class SqlHelper {
     }
 
     public static String results(List<String> args) {
-        StringBuilder query = new StringBuilder("INSERT INTO results (result_id, race_id, driver_id, constructor_id, status_id, number, grid, position, position_text, position_order, points, laps, time, milliseconds, rank_, fastest_lap, fastest_lap_time, fastest_lap_speed) VALUES (");
+        StringBuilder query = new StringBuilder("INSERT INTO results (result_id, race_id, driver_id, constructor_id, number, grid, position, position_text, position_order, points, laps, time, milliseconds, rank_, fastest_lap, fastest_lap_time, fastest_lap_speed, status_id) VALUES (");
         return compile(query, args);
     }
 
@@ -83,7 +83,7 @@ public class SqlHelper {
     }
 
     public static String sprint_results(List<String> args) {
-        StringBuilder query = new StringBuilder("INSERT INTO sprint_results (sprint_result_id, race_id, driver_id, constructor_id, status_id, number, grid, position, position_text, position_order, points, laps, time, milliseconds, rank_, fastest_lap, fastest_lap_time, fastest_lap_speed) VALUES (");
+        StringBuilder query = new StringBuilder("INSERT INTO sprint_results (result_id, race_id, driver_id, constructor_id, number, grid, position, position_text, position_order, points, laps, time, milliseconds, fastest_lap, fastest_lap_time, status_id) VALUES (");
         return compile(query, args);
     }
 
