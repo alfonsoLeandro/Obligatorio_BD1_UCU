@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author alfonsoLeandro
  */
-public class SqlHelper {
+public class DataInsertionHelper {
 
     private static String compile(StringBuilder query, List<String> args) {
         for (int i = 0; i < args.size(); i++) {

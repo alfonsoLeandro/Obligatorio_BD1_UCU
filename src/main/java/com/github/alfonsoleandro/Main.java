@@ -40,11 +40,9 @@ public class Main {
 
             // Loads sprint_results table data, which also requires a special process
             loadSprintResultsData();
-
         }
 
         System.out.println("Ejecucion finalizada: " + new Date());
-
     }
 
     public static void main(String[] args) {
@@ -173,7 +171,7 @@ public class Main {
                         .append(" ORDER BY time LIMIT 1) AS t1;");
 
             } else {
-                insertQuery = new StringBuilder(SqlHelper.results(Arrays.asList(data)));
+                insertQuery = new StringBuilder(DataInsertionHelper.results(Arrays.asList(data)));
             }
             insertQuery = new StringBuilder(insertQuery.toString().replace("\\N", "null"));
 
@@ -232,7 +230,7 @@ public class Main {
                         .append(" ORDER BY time LIMIT 1) AS t1;");
 
             } else {
-                insertQuery = new StringBuilder(SqlHelper.sprint_results(Arrays.asList(data)));
+                insertQuery = new StringBuilder(DataInsertionHelper.sprint_results(Arrays.asList(data)));
             }
             insertQuery = new StringBuilder(insertQuery.toString().replace("\\N", "null"));
 
@@ -256,7 +254,7 @@ public class Main {
         bufferedReader.lines().skip(1).forEach(line -> {
             String insertQuery;
             try {
-                Method method = SqlHelper.class.getMethod(fileName, List.class);
+                Method method = DataInsertionHelper.class.getMethod(fileName, List.class);
                 insertQuery = (String) method.invoke(null, Arrays.asList(line.split(",")));
             } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                 throw new RuntimeException(e);
