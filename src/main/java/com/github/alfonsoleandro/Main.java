@@ -15,15 +15,6 @@ import java.util.List;
 public class Main {
 
     private static final String BD_NAME = "obligatorio";
-
-    public static void main(String[] args) {
-        try {
-            new Main();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private final Connection connection;
 
     public Main() throws ClassNotFoundException, SQLException, IOException {
@@ -43,10 +34,25 @@ public class Main {
             // Alters all the necessary tables, read from the "alters.sql" file.
             executeFile(new File("src/main/resources/sql/alter_tables.sql"));
             loadData();
+
+            // Loads results table data, which requires a special process
+            loadResultsData();
+
+            // Loads sprint_results table data, which also requires a special process
+            loadSprintResultsData();
+
         }
 
         System.out.println("Ejecucion finalizada: " + new Date());
 
+    }
+
+    public static void main(String[] args) {
+        try {
+            new Main();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -115,9 +121,7 @@ public class Main {
                 "lap_times",
                 "pit_stops",
                 "qualifyings",
-                "results",
                 "seasons",
-                "sprint_results"
         }) {
             System.out.println("Insertando datos desde \"" + fileName + ".csv\"...");
             loadFile(fileName);
@@ -126,10 +130,128 @@ public class Main {
     }
 
     /**
+     * Loads data from results.csv file to results table, taking into account time differences
+     */
+    private void loadResultsData() throws IOException {
+        File archivo = new File("src/main/resources/archivos/results.csv");
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(archivo));
+        bufferedReader.lines().skip(1).forEach(line -> {
+            String[] data = line.split(",");
+            StringBuilder insertQuery;
+
+            System.out.println(data[11]);
+            if (data[11].contains("+")) {
+                insertQuery = new StringBuilder("INSERT INTO results (result_id, race_id, driver_id, constructor_id, number, grid, position, position_text, position_order, points, laps, time, milliseconds, rank_, fastest_lap, fastest_lap_time, fastest_lap_speed, status_id) SELECT ");
+                for (int i = 0; i < 11; i++) {
+                    insertQuery.append(data[i]).append(", ");
+                }
+                String minutes = "0";
+                String seconds;
+                String[] split = data[11]
+                        .replace("+", "")
+                        .replace("\"", "")
+                        .split(":");
+                if(data[11].contains(":")){
+                    minutes = split[0];
+                    seconds = split[1];
+                }else{
+                    seconds = split[0];
+                }
+
+                insertQuery.append("(t1.time + INTERVAL ")
+                        .append(minutes)
+                        .append(" MINUTE + INTERVAL ")
+                        .append(seconds)
+                        .append(" SECOND")
+                        .append("), ");
+
+                for (int i = 12; i < data.length; i++) {
+                    insertQuery.append(data[i]).append(i == data.length - 1 ? " " : ", ");
+                }
+                insertQuery.append("FROM (SELECT time FROM results WHERE race_id = ")
+                        .append(data[1])
+                        .append(" ORDER BY time LIMIT 1) AS t1;");
+
+            } else {
+                insertQuery = new StringBuilder(SqlHelper.results(Arrays.asList(data)));
+            }
+            insertQuery = new StringBuilder(insertQuery.toString().replace("\\N", "null"));
+
+            try {
+                this.connection.prepareStatement(insertQuery.toString()).execute();
+            } catch (SQLException e) {
+                System.out.println("Ocurrio un error en el siguiente insert:");
+                System.out.println(insertQuery);
+                throw new RuntimeException(e);
+            }
+        });
+        bufferedReader.close();
+    }
+
+
+    /**
+     * Loads data from results.csv file to results table, taking into account time differences
+     */
+    private void loadSprintResultsData() throws IOException {
+        File archivo = new File("src/main/resources/archivos/sprint_results.csv");
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(archivo));
+        bufferedReader.lines().skip(1).forEach(line -> {
+            String[] data = line.split(",");
+            StringBuilder insertQuery;
+
+            if (data[11].contains("+")) {
+                insertQuery = new StringBuilder("INSERT INTO sprint_results (result_id, race_id, driver_id, constructor_id, number, grid, position, position_text, position_order, points, laps, time, milliseconds, fastest_lap, fastest_lap_time, status_id) SELECT ");
+                for (int i = 0; i < 11; i++) {
+                    insertQuery.append(data[i]).append(", ");
+                }
+                String minutes = "0";
+                String seconds;
+                String[] split = data[11]
+                        .replace("+", "")
+                        .replace("\"", "")
+                        .split(":");
+                if(data[11].contains(":")){
+                    minutes = split[0];
+                    seconds = split[1];
+                }else{
+                    seconds = split[0];
+                }
+
+                insertQuery.append("(t1.time + INTERVAL ")
+                        .append(minutes)
+                        .append(" MINUTE + INTERVAL ")
+                        .append(seconds)
+                        .append(" SECOND")
+                        .append("), ");
+
+                for (int i = 12; i < data.length; i++) {
+                    insertQuery.append(data[i]).append(i == data.length - 1 ? " " : ", ");
+                }
+                insertQuery.append("FROM (SELECT time FROM sprint_results WHERE race_id = ")
+                        .append(data[1])
+                        .append(" ORDER BY time LIMIT 1) AS t1;");
+
+            } else {
+                insertQuery = new StringBuilder(SqlHelper.sprint_results(Arrays.asList(data)));
+            }
+            insertQuery = new StringBuilder(insertQuery.toString().replace("\\N", "null"));
+
+            try {
+                this.connection.prepareStatement(insertQuery.toString()).execute();
+            } catch (SQLException e) {
+                System.out.println("Ocurrio un error en el siguiente insert:");
+                System.out.println(insertQuery);
+                throw new RuntimeException(e);
+            }
+        });
+        bufferedReader.close();
+    }
+
+    /**
      * Loads a file and inserts its data to the database.
      */
     private void loadFile(String fileName) throws IOException {
-        File archivo = new File("src/main/resources/archivos/"+fileName+".csv");
+        File archivo = new File("src/main/resources/archivos/" + fileName + ".csv");
         BufferedReader bufferedReader = new BufferedReader(new FileReader(archivo));
         bufferedReader.lines().skip(1).forEach(line -> {
             String insertQuery;
