@@ -42,6 +42,11 @@ public class Main {
             loadSprintResultsData();
         }
 
+        System.out.println("Creación de tablas y cargas de datos finalizadas: " + new Date());
+        
+        // Runs the queries and saves the results to a "results.txt" file
+        runQueries();
+
         System.out.println("Ejecucion finalizada: " + new Date());
     }
 
@@ -269,6 +274,14 @@ public class Main {
             }
         });
         bufferedReader.close();
+
+    }
+
+    /**
+     * Runs queries and saves the results to a "results.txt" file in the resources folder.
+     */
+    private void runQueries(){
+
 
     }
 
