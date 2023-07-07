@@ -304,11 +304,21 @@ public class Main {
         List<String> lines4 = new ArrayList<>();
         lines4.add("Grandes premios entre 1996 y 1999: ");
         while (resultSet4.next()){
-            lines4.add(resultSet2.getString(1));
+            lines4.add(resultSet4.getString(1));
+        }
+
+
+        // Query #5
+        ResultSet resultSet5 = this.connection.createStatement().executeQuery(QueryHelper.suzuka97Winner());
+        List<String> lines5 = new ArrayList<>();
+        lines5.add("Ganador de Suzuka 1997: ");
+        while (resultSet5.next()){
+            lines5.add(resultSet5.getString(1));
         }
 
         writeResult(fileWriter, 2, lines2);
         writeResult(fileWriter, 4, lines4);
+        writeResult(fileWriter, 5, lines5);
 
         fileWriter.close();
     }
