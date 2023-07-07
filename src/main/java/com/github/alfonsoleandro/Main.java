@@ -293,12 +293,22 @@ public class Main {
         // Query #2
         ResultSet resultSet2 = this.connection.createStatement().executeQuery(QueryHelper.mostWinsInConstructor());
         List<String> lines2 = new ArrayList<>();
-        lines2.add("Scuderia with most wins: ");
+        lines2.add("Scuderia con más victorias históricas: ");
         while (resultSet2.next()){
             lines2.add(resultSet2.getString(1) + " - " + resultSet2.getString(2));
         }
 
+
+        // Query #4
+        ResultSet resultSet4 = this.connection.createStatement().executeQuery(QueryHelper.bigRacesBetweenYears());
+        List<String> lines4 = new ArrayList<>();
+        lines4.add("Grandes premios entre 1996 y 1999: ");
+        while (resultSet4.next()){
+            lines4.add(resultSet2.getString(1));
+        }
+
         writeResult(fileWriter, 2, lines2);
+        writeResult(fileWriter, 4, lines4);
 
         fileWriter.close();
     }
