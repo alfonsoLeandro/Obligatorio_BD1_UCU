@@ -62,4 +62,19 @@ public class QueryHelper {
                     AND position = 1;
                 """;
     }
+
+    /**
+     * Query #7: Winner of most races out of pole position
+     */
+    public static String notPolePositionWinner() {
+        return """
+                SELECT CONCAT(drivers.forename, " ", drivers.surname), COUNT(*) AS wins FROM results
+                    JOIN drivers ON results.driver_id = drivers.driver_id
+                WHERE position = 1
+                    AND grid != 1
+                GROUP BY drivers.driver_id, drivers.forename, drivers.surname
+                ORDER BY wins DESC
+                LIMIT 1;
+                """;
+    }
 }

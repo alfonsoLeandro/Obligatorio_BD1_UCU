@@ -325,10 +325,20 @@ public class Main {
             lines6.add(resultSet6.getString(1) + " - " + resultSet6.getInt(2));
         }
 
+
+        // Query #7
+        ResultSet resultSet7 = this.connection.createStatement().executeQuery(QueryHelper.notPolePositionWinner());
+        List<String> lines7 = new ArrayList<>();
+        lines7.add("Ganador de mas carreras saliendo fuera de pole position: ");
+        while (resultSet7.next()){
+            lines7.add(resultSet7.getString(1) + " - " + resultSet7.getInt(2));
+        }
+
         writeResult(fileWriter, 2, lines2);
         writeResult(fileWriter, 4, lines4);
         writeResult(fileWriter, 5, lines5);
         writeResult(fileWriter, 6, lines6);
+        writeResult(fileWriter, 7, lines7);
 
         fileWriter.close();
     }
