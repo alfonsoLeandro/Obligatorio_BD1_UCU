@@ -329,9 +329,18 @@ public class Main {
         // Query #7
         ResultSet resultSet7 = this.connection.createStatement().executeQuery(QueryHelper.notPolePositionWinner());
         List<String> lines7 = new ArrayList<>();
-        lines7.add("Ganador de mas carreras saliendo fuera de pole position: ");
+        lines7.add("Ganador de más carreras saliendo fuera de pole position: ");
         while (resultSet7.next()){
             lines7.add(resultSet7.getString(1) + " - " + resultSet7.getInt(2));
+        }
+
+
+        // Query #8
+        ResultSet resultSet8 = this.connection.createStatement().executeQuery(QueryHelper.polePositionWinner());
+        List<String> lines8 = new ArrayList<>();
+        lines8.add("Ganador de más carreras saliendo de pole position: ");
+        while (resultSet8.next()){
+            lines8.add(resultSet8.getString(1) + " - " + resultSet8.getInt(2));
         }
 
         writeResult(fileWriter, 2, lines2);
@@ -339,6 +348,7 @@ public class Main {
         writeResult(fileWriter, 5, lines5);
         writeResult(fileWriter, 6, lines6);
         writeResult(fileWriter, 7, lines7);
+        writeResult(fileWriter, 8, lines8);
 
         fileWriter.close();
     }

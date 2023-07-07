@@ -77,4 +77,19 @@ public class QueryHelper {
                 LIMIT 1;
                 """;
     }
+
+    /**
+     * Query #8: Winner of most races in pole position
+     */
+    public static String polePositionWinner() {
+        return """
+                SELECT CONCAT(drivers.forename, " ", drivers.surname), COUNT(*) AS wins FROM results
+                    JOIN drivers ON results.driver_id = drivers.driver_id
+                WHERE position = 1
+                    AND grid = 1
+                GROUP BY drivers.driver_id, drivers.forename, drivers.surname
+                ORDER BY wins DESC
+                LIMIT 1;
+                """;
+    }
 }
