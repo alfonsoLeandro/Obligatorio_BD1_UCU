@@ -316,9 +316,19 @@ public class Main {
             lines5.add(resultSet5.getString(1));
         }
 
+
+        // Query #6
+        ResultSet resultSet6 = this.connection.createStatement().executeQuery(QueryHelper.jacquesVilleneuveVictories());
+        List<String> lines6 = new ArrayList<>();
+        lines6.add("Victorias de Jacques Villeneuve: ");
+        while (resultSet6.next()){
+            lines6.add(resultSet6.getString(1) + " - " + resultSet6.getInt(2));
+        }
+
         writeResult(fileWriter, 2, lines2);
         writeResult(fileWriter, 4, lines4);
         writeResult(fileWriter, 5, lines5);
+        writeResult(fileWriter, 6, lines6);
 
         fileWriter.close();
     }

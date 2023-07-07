@@ -49,4 +49,17 @@ public class QueryHelper {
             AND races.year = 1997 AND position = 1;
         """;
     }
+
+    /**
+     * Query #6: Jacques Vulleneuve victories
+     */
+    public static String jacquesVilleneuveVictories() {
+        return """
+                SELECT CONCAT(drivers.forename, " ", drivers.surname), COUNT(*) FROM results
+                    JOIN drivers ON results.driver_id = drivers.driver_id
+                WHERE drivers.forename = 'Jacques'
+                    AND drivers.surname = 'Villeneuve'
+                    AND position = 1;
+                """;
+    }
 }
