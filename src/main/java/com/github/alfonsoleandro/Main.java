@@ -4,9 +4,8 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.*;
-import java.util.Arrays;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author alfonsoLeandro, Joelit0
@@ -83,8 +82,7 @@ public class Main {
         while (resultSet.next()) {
             String tableName = resultSet.getString("TABLE_NAME");
             if (tableNames.contains(tableName)) {
-                System.out.println(tableName);
-                System.out.println("Existia la tabla \"" + tableName + "\", los alters (foreign keys) no se ejecutarán.");
+                System.out.println("Existia la tabla \"" + tableName + "\", los alters (foreign keys) y los inserts no se ejecutarán.");
                 tablesExist = true;
                 break;
             }
@@ -280,9 +278,41 @@ public class Main {
     /**
      * Runs queries and saves the results to a "results.txt" file in the resources folder.
      */
-    private void runQueries(){
+    private void runQueries() throws IOException, SQLException {
+        File results = new File("src/main/resources/procesado/resultados_queries.txt");
+        if(results.exists()){
+            results.delete();
+        }
+        results.createNewFile();
 
+        BufferedWriter fileWriter = new BufferedWriter(new FileWriter(results));
+        fileWriter.write("Resultados: ");
+        fileWriter.newLine();
+        fileWriter.newLine();
 
+        // Query #2
+        ResultSet resultSet2 = this.connection.createStatement().executeQuery(QueryHelper.mostWinsInConstructor());
+        List<String> lines2 = new ArrayList<>();
+        lines2.add("Scuderia with most wins: ");
+        while (resultSet2.next()){
+            lines2.add(resultSet2.getString(1) + " - " + resultSet2.getString(2));
+        }
+
+        writeResult(fileWriter, 2, lines2);
+
+        fileWriter.close();
+    }
+
+    private void writeResult(BufferedWriter fileWriter, int queryN, Iterable<String> lines) throws IOException, SQLException {
+        fileWriter.write("Query N° " + queryN + ":");
+        fileWriter.newLine();
+
+        for (String line : lines) {
+            fileWriter.write("\t"+line);
+            fileWriter.newLine();
+        }
+
+        fileWriter.newLine();
     }
 
 }
